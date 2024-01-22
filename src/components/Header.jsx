@@ -4,7 +4,7 @@ import { FaAmazon } from "react-icons/fa";
 
 function Header() {
   return (
-    <header className="bg-gray-700 flex flex-row justify-between  items-center h-12 p-2 rounded-md m-px">
+    <header className="bg-gray-700 fixed flex flex-row justify-between w-full items-center h-12 p-2 rounded-md m-px">
       <div className="ml-4">
         <FaAmazon size={36} />
       </div>
