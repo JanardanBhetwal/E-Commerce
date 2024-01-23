@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 function Navbar() {
   return (
-    <div className="p-2 text-md font-bold text-white">
+    <nav className="p-2 top text-md font-bold text-white">
       <ul className="flex flex-row justify-between">
         <li>
           <NavLink
@@ -37,7 +37,7 @@ function Navbar() {
           </NavLink>
         </li>
       </ul>
-    </div>
+    </nav>
   );
 }
 
