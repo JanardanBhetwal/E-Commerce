@@ -1,5 +1,5 @@
 import ProductHook from "../hooks/ProductHook";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function SearchBar() {
   const { searchTerm, searchItems } = ProductHook();
@@ -10,16 +10,14 @@ function SearchBar() {
     searchItems(search);
   };
 
+  useEffect(() => {
+    searchItems(search);
+  }, [search]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     searchItems(search);
   };
-  // let renderedProducts;
-  // const productShow = (datas) => {
-  //   renderedProducts = datas.map((data) => {
-  //     return <ShowProduct key={data.id} data={data} />;
-  //   });
-  // };
 
   return (
     <div>
