@@ -1,11 +1,14 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
 import axios from "axios";
 import reducer from "../reducers/ProductReducer";
 
-const URL = "https://fakestoreapi.com/products";
+const URL = "https://api.pujakaitem.com/api/products";
 const API_LOADING = "api_loading";
 const API_ERROR = "api_error";
 const API_DATA = "api_data";
+const SINGLE_DATA_LOADING = "single_data_loading";
+const SINGLE_DATA_ERROR = "single_data_error";
+const SINGLE_DATA = "single_data";
 
 const ProductContext = createContext();
 
@@ -15,9 +18,23 @@ function Provider({ children }) {
     isError: false,
     Products: [],
     featuredProducts: [],
+    singleProductLoading: true,
+    singleProductError: false,
+    singleProduct: {},
   };
+  const [searchedProducts, setSearchedProducts] = useState([
+    { id: 1, name: "" },
+  ]);
 
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const isLoading = state.isLoading;
+  const isError = state.isError;
+  const Products = state.Products;
+  const featuredProducts = state.featuredProducts;
+  const singleProduct = state.singleProduct;
+  const singleProductLoading = state.singleProductLoading;
+  const singleProductError = state.singleProductError;
 
   const getProducts = async () => {
     dispatch({ type: API_LOADING });
@@ -30,11 +47,43 @@ function Provider({ children }) {
     }
   };
 
+  const getSingleProduct = async (id) => {
+    dispatch({ type: SINGLE_DATA_LOADING });
+    try {
+      const response = await axios.get(`${URL}/?id=${id}`);
+      const data = response.data;
+      dispatch({ type: SINGLE_DATA, payload: data });
+    } catch (error) {
+      dispatch({ type: SINGLE_DATA_ERROR, payload: error });
+    }
+  };
+
+  const searchItems = (name) => {
+    const products = Products.filter((product) => {
+      return product.name.toLowerCase().includes(name.toLowerCase());
+    });
+
+    setSearchedProducts(...products);
+
+    console.log("The searched Product is ", searchedProducts);
+  };
+
   useEffect(() => {
     getProducts();
-  }, []);
+  }, [searchedProducts]);
 
-  const valueToShare = { ...state };
+  const valueToShare = {
+    isLoading,
+    isError,
+    Products,
+    featuredProducts,
+    singleProduct,
+    singleProductLoading,
+    singleProductError,
+    searchedProducts,
+    getSingleProduct,
+    searchItems,
+  };
 
   return (
     <ProductContext.Provider value={valueToShare}>
