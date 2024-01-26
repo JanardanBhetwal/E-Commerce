@@ -4,6 +4,8 @@ const API_DATA = "api_data";
 const SINGLE_DATA_LOADING = "single_data_loading";
 const SINGLE_DATA_ERROR = "single_data_error";
 const SINGLE_DATA = "single_data";
+const SEARCHED_DATA = "searched_data";
+const SEARCH_TERM = "search_term";
 
 function ProductReducer(state, action) {
   switch (action.type) {
@@ -26,6 +28,16 @@ function ProductReducer(state, action) {
         ...state,
         singleProductLoading: false,
         singleProduct: action.payload,
+      };
+    case SEARCHED_DATA:
+      return {
+        ...state,
+        searchedProducts: action.payload,
+      };
+    case SEARCH_TERM:
+      return {
+        ...state,
+        searchTerm: action.payload,
       };
   }
 }

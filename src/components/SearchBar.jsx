@@ -1,28 +1,25 @@
 import ProductHook from "../hooks/ProductHook";
-import ShowProduct from "./ShowProduct";
 import { useState } from "react";
 
 function SearchBar() {
-  const { searchItems, searchedProducts } = ProductHook();
+  const { searchTerm, searchItems } = ProductHook();
   const [search, setSearch] = useState("");
 
   const handleInputChange = (e) => {
     setSearch(e.target.value);
+    searchItems(search);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    await searchItems(search);
-    const datas = searchedProducts;
-    productShow(datas);
-    setSearch("");
+    searchItems(search);
   };
-  let renderedProducts;
-  const productShow = (datas) => {
-    renderedProducts = datas.map((data) => {
-      return <ShowProduct key={data.id} data={data} />;
-    });
-  };
+  // let renderedProducts;
+  // const productShow = (datas) => {
+  //   renderedProducts = datas.map((data) => {
+  //     return <ShowProduct key={data.id} data={data} />;
+  //   });
+  // };
 
   return (
     <div>
@@ -38,7 +35,6 @@ function SearchBar() {
           value={search}
         />
       </form>
-      {renderedProducts}
     </div>
   );
 }

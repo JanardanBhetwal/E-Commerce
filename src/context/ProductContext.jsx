@@ -9,6 +9,7 @@ const API_DATA = "api_data";
 const SINGLE_DATA_LOADING = "single_data_loading";
 const SINGLE_DATA_ERROR = "single_data_error";
 const SINGLE_DATA = "single_data";
+const SEARCH_TERM = "search_term";
 
 const ProductContext = createContext();
 
@@ -21,10 +22,8 @@ function Provider({ children }) {
     singleProductLoading: true,
     singleProductError: false,
     singleProduct: {},
+    searchTerm: "",
   };
-  const [searchedProducts, setSearchedProducts] = useState([
-    { id: 1, name: "" },
-  ]);
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -35,6 +34,7 @@ function Provider({ children }) {
   const singleProduct = state.singleProduct;
   const singleProductLoading = state.singleProductLoading;
   const singleProductError = state.singleProductError;
+  const searchTerm = state.searchTerm;
 
   const getProducts = async () => {
     dispatch({ type: API_LOADING });
@@ -59,18 +59,12 @@ function Provider({ children }) {
   };
 
   const searchItems = (name) => {
-    const products = Products.filter((product) => {
-      return product.name.toLowerCase().includes(name.toLowerCase());
-    });
-
-    setSearchedProducts(...products);
-
-    console.log("The searched Product is ", searchedProducts);
+    dispatch({ type: SEARCH_TERM, payload: name });
   };
 
   useEffect(() => {
     getProducts();
-  }, [searchedProducts]);
+  }, []);
 
   const valueToShare = {
     isLoading,
@@ -80,7 +74,7 @@ function Provider({ children }) {
     singleProduct,
     singleProductLoading,
     singleProductError,
-    searchedProducts,
+    searchTerm,
     getSingleProduct,
     searchItems,
   };

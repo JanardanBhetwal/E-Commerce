@@ -3,9 +3,20 @@ import ShowProduct from "../components/ShowProduct";
 import SearchBar from "../components/SearchBar";
 
 function Products() {
-  const { Products, isLoading } = ProductHook();
+  const { searchTerm, Products, isLoading } = ProductHook();
 
-  const renderedProducts = Products.map((data) => {
+  let totalProducts = Products;
+  if (!isLoading) {
+    if (!searchTerm) {
+      totalProducts = Products;
+    } else {
+      totalProducts = Products.filter((product) => {
+        return product.name.toLowerCase().includes(searchTerm.toLowerCase());
+      });
+    }
+  }
+
+  const renderedProducts = totalProducts.map((data) => {
     return <ShowProduct key={data.id} data={data} />;
   });
 
