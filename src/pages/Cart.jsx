@@ -1,6 +1,6 @@
 import ProductHook from "../hooks/ProductHook";
 import { Link } from "react-router-dom";
-import ShowProduct from "../components/ShowProduct";
+import ShowCart from "../components/ShowCart";
 
 function Cart() {
   const { items, cartItems, Products } = ProductHook();
@@ -12,10 +12,14 @@ function Cart() {
     );
 
     const renderedItems = totalCartItems.map((data) => {
-      return <ShowProduct key={data.id} data={data} />;
+      return <ShowCart key={data.id} data={data} />;
     });
 
-    return <div>{renderedItems}</div>;
+    return (
+      <div className="mt-8 flex flex-row flex-wrap justify-center">
+        {renderedItems}
+      </div>
+    );
   }
 
   return (
