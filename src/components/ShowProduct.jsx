@@ -9,7 +9,7 @@ function ShowProduct({ data }) {
   return (
     <Link
       to={`/singleproduct/${id}`}
-      className="max-w-60 rounded flex flex-col border shadow-lg p-4 m-4 "
+      className="max-w-60 rounded flex flex-col border shadow-lg p-4 m-2 "
     >
       <img
         className="w-full h-auto object-cover"

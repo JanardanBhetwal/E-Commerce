@@ -2,7 +2,7 @@ import ProductHook from "../hooks/ProductHook";
 import { useState, useEffect } from "react";
 
 function SearchBar() {
-  const { searchTerm, searchItems } = ProductHook();
+  const { searchItems } = ProductHook();
   const [search, setSearch] = useState("");
 
   const handleInputChange = (e) => {

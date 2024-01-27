@@ -10,6 +10,7 @@ const SINGLE_DATA_LOADING = "single_data_loading";
 const SINGLE_DATA_ERROR = "single_data_error";
 const SINGLE_DATA = "single_data";
 const SEARCH_TERM = "search_term";
+const FILTER_TERM = "filter_term";
 
 const ProductContext = createContext();
 
@@ -23,6 +24,7 @@ function Provider({ children }) {
     singleProductError: false,
     singleProduct: {},
     searchTerm: "",
+    filterTerm: "All",
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -35,6 +37,7 @@ function Provider({ children }) {
   const singleProductLoading = state.singleProductLoading;
   const singleProductError = state.singleProductError;
   const searchTerm = state.searchTerm;
+  const filterTerm = state.filterTerm;
 
   const getProducts = async () => {
     dispatch({ type: API_LOADING });
@@ -62,6 +65,10 @@ function Provider({ children }) {
     dispatch({ type: SEARCH_TERM, payload: name });
   };
 
+  const filterItems = (category) => {
+    dispatch({ type: FILTER_TERM, payload: category });
+  };
+
   useEffect(() => {
     getProducts();
   }, []);
@@ -77,6 +84,8 @@ function Provider({ children }) {
     searchTerm,
     getSingleProduct,
     searchItems,
+    filterItems,
+    filterTerm,
   };
 
   return (

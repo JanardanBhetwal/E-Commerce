@@ -6,6 +6,7 @@ const SINGLE_DATA_ERROR = "single_data_error";
 const SINGLE_DATA = "single_data";
 const SEARCHED_DATA = "searched_data";
 const SEARCH_TERM = "search_term";
+const FILTER_TERM = "filter_term";
 
 function ProductReducer(state, action) {
   switch (action.type) {
@@ -38,6 +39,11 @@ function ProductReducer(state, action) {
       return {
         ...state,
         searchTerm: action.payload,
+      };
+    case FILTER_TERM:
+      return {
+        ...state,
+        filterTerm: action.payload,
       };
   }
 }
