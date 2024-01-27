@@ -7,6 +7,7 @@ const SINGLE_DATA = "single_data";
 const SEARCHED_DATA = "searched_data";
 const SEARCH_TERM = "search_term";
 const FILTER_TERM = "filter_term";
+const ITEMS = "items";
 
 function ProductReducer(state, action) {
   switch (action.type) {
@@ -45,6 +46,13 @@ function ProductReducer(state, action) {
         ...state,
         filterTerm: action.payload,
       };
+    case ITEMS: {
+      return {
+        ...state,
+        items: state.items + 1,
+        cartItems: [...state.cartItems, action.payload],
+      };
+    }
   }
 }
 

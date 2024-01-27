@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer, useState } from "react";
+import { createContext, useEffect, useReducer } from "react";
 import axios from "axios";
 import reducer from "../reducers/ProductReducer";
 
@@ -11,6 +11,7 @@ const SINGLE_DATA_ERROR = "single_data_error";
 const SINGLE_DATA = "single_data";
 const SEARCH_TERM = "search_term";
 const FILTER_TERM = "filter_term";
+const ITEMS = "items";
 
 const ProductContext = createContext();
 
@@ -25,6 +26,8 @@ function Provider({ children }) {
     singleProduct: {},
     searchTerm: "",
     filterTerm: "All",
+    items: 0,
+    cartItems: [],
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -38,6 +41,8 @@ function Provider({ children }) {
   const singleProductError = state.singleProductError;
   const searchTerm = state.searchTerm;
   const filterTerm = state.filterTerm;
+  const items = state.items;
+  const cartItems = state.cartItems;
 
   const getProducts = async () => {
     dispatch({ type: API_LOADING });
@@ -69,6 +74,10 @@ function Provider({ children }) {
     dispatch({ type: FILTER_TERM, payload: category });
   };
 
+  const handleAddtoCart = (id) => {
+    dispatch({ type: ITEMS, payload: id });
+  };
+
   useEffect(() => {
     getProducts();
   }, []);
@@ -86,6 +95,9 @@ function Provider({ children }) {
     searchItems,
     filterItems,
     filterTerm,
+    items,
+    handleAddtoCart,
+    cartItems,
   };
 
   return (
