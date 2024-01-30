@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import GlobalContext from "../Context/ProductContext";
+import GlobalContext from "../context/ProductContext";
 
 function ProductHook() {
   return useContext(GlobalContext);
